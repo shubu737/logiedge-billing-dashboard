@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Environment variables — never commit passwords
+.env
+.env.local
+
+# Production build
+build/
+dist/
+
+# Logs
+*.log
+
+# IDE files
+.vscode/
+.idea/
+.DS_Store
