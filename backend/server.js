@@ -29,4 +29,14 @@ app.use('/api/invoices', invoiceRoutes);
 // --- Health check — useful to confirm server is running ---
 app.get('/health', (req, res) => res.json({ status: 'OK', port: PORT }));
 
-app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`));
+app.listen(PORT, () => {
+    console.log(`Backend running on http://localhost:${PORT}`);
+
+    // Ping the server every 10 minutes to prevent Render free tier from sleeping
+    setInterval(() => {
+        const http = require('http');
+        http.get(`http://localhost:${PORT}/health`, (res) => {
+            console.log('Server keep-alive ping sent');
+        }).on('error', () => {});
+    }, 10 * 60 * 1000);
+});
